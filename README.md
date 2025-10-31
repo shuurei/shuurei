@@ -1,6 +1,6 @@
 <!-- Head -->
 <div align="center">
-  <img src="https://i.pinimg.com/originals/ce/13/d8/ce13d8fa9d17ec31e7b80934f46f8f6f.gif" alt="Programming GIF" width="100%" />
+  <img src="https://github.com/shuurei/shuurei/blob/main/ce13d8fa9d17ec31e7b80934f46f8f6f.gif?raw=true" alt="Programming GIF" width="100%" />
 </div>
 
 <div align="center">
