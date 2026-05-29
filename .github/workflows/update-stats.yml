@@ -1,0 +1,74 @@
+name: Update Github Readme Stats
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Clone Github Readme Stats
+        run: git clone --depth=1 https://github.com/anuraghazra/github-readme-stats.git
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./github-readme-stats/node_modules
+          key: npm-${{ hashFiles('github-readme-stats/package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install dependencies
+        working-directory: ./github-readme-stats
+        run: npm install
+
+      - name: Start the server
+        working-directory: ./github-readme-stats
+        env:
+          PAT_1: ${{ secrets.GH_TOKEN }}
+        run: nohup node express.js &
+
+      - name: Wait for server to be ready
+        run: |
+          for i in $(seq 1 15); do
+            curl -sf http://localhost:9000/api/ && break
+            echo "Attempt $i — waiting..."
+            sleep 2
+          done
+
+      - name: Fetch SVGs in parallel
+        run: |
+          mkdir -p ./stats
+          BASE="http://localhost:9000/api"
+
+          curl "$BASE/?username=${{ github.repository_owner }}&theme=nord&count_private=true&include_orgs=true&show_icons=true" \
+            -o ./stats/stats.svg &
+
+          curl "$BASE/top-langs?username=${{ github.repository_owner }}&theme=nord&layout=compact&include_orgs=true" \
+            -o ./stats/top-langs.svg &
+
+          wait
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push
+        run: |
+          git add ./stats/
+          git commit -m "Update GitHub Stats" || echo "Nothing to commit"
+          git push

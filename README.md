@@ -35,8 +35,8 @@
 ## 🌱 GitHub Status
 <div>
     <div align="center">
-        <img width="398" src="https://github-readme-stats.vercel.app/api?username=shuurei&count_private=true&show_icons=true&theme=nord&rank_icon=github&border_radius=8" />
-        <img width="420" src="https://nirzak-streak-stats.vercel.app/?user=shuurei&theme=nord&hide_border=false" alt="GitHub Streak Stats" />
+        <img width="398" src="./stats/stats.svg" alt="GitHub Streak Stats" />
+        <img width="420" src="./stats/top-langs.svg" alt="GitHub Language Stats" />
     </div>
 <br/>
 
