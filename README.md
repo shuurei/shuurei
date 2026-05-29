@@ -35,8 +35,8 @@
 ## 🌱 GitHub Status
 <div>
     <div align="center">
-        <img height="180" src="./stats/stats.svg" alt="GitHub Streak Stats" />
-        <img height="180" src="./stats/top-langs.svg" alt="GitHub Language Stats" />
+        <img height="165" src="./stats/stats.svg" alt="GitHub Streak Stats" />
+        <img height="165" src="./stats/top-langs.svg" alt="GitHub Language Stats" />
     </div>
 <br/>
 
